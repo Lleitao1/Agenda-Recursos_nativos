@@ -22,6 +22,7 @@
 		3AED22A125A3721B00ADF479 /* CalculaMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AED22A025A3721B00ADF479 /* CalculaMedia.swift */; };
 		3AED22A325A3854400ADF479 /* Notificacoes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AED22A225A3854400ADF479 /* Notificacoes.swift */; };
 		3AED22A525A39FFF00ADF479 /* AutenticacaoLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AED22A425A39FFF00ADF479 /* AutenticacaoLocal.swift */; };
+		3AED22A825A3A97000ADF479 /* Pino.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AED22A725A3A97000ADF479 /* Pino.swift */; };
 		A281001A1FD5C2F700E1BDF1 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A28100191FD5C2F700E1BDF1 /* ImagePicker.swift */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +44,7 @@
 		3AED22A025A3721B00ADF479 /* CalculaMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculaMedia.swift; sourceTree = "<group>"; };
 		3AED22A225A3854400ADF479 /* Notificacoes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notificacoes.swift; sourceTree = "<group>"; };
 		3AED22A425A39FFF00ADF479 /* AutenticacaoLocal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutenticacaoLocal.swift; sourceTree = "<group>"; };
+		3AED22A725A3A97000ADF479 /* Pino.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pino.swift; sourceTree = "<group>"; };
 		A28100191FD5C2F700E1BDF1 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -135,6 +137,7 @@
 		3AED229B25A357CA00ADF479 /* Mapa */ = {
 			isa = PBXGroup;
 			children = (
+				3AED22A625A3A95A00ADF479 /* Model */,
 				3AED229C25A357DB00ADF479 /* Controller */,
 			);
 			path = Mapa;
@@ -152,6 +155,14 @@
 			isa = PBXGroup;
 			children = (
 				3AED22A025A3721B00ADF479 /* CalculaMedia.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3AED22A625A3A95A00ADF479 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3AED22A725A3A97000ADF479 /* Pino.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -242,6 +253,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				03AA176D1FC8515A003CB2B8 /* AlunoViewController.swift in Sources */,
+				3AED22A825A3A97000ADF479 /* Pino.swift in Sources */,
 				03AA17661FC84353003CB2B8 /* HomeTableViewController.swift in Sources */,
 				03AA17561FC84154003CB2B8 /* Agenda.xcdatamodeld in Sources */,
 				3AED22A125A3721B00ADF479 /* CalculaMedia.swift in Sources */,

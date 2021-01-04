@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class MapaViewController: UIViewController {
+class MapaViewController: UIViewController, CLLocationManagerDelegate    {
     
     //MARK: - IBOutlets
     
@@ -19,6 +19,8 @@ class MapaViewController: UIViewController {
     //MARK: - variavel
     
     var aluno:Aluno?
+    lazy var localizacao = Localizacao()
+    lazy var gerenciadorLocalizacao = CLLocationManager()
     
     //MARK: - View Lyfecycle
     
@@ -26,7 +28,9 @@ class MapaViewController: UIViewController {
         super.viewDidLoad()
         self.navigationItem.title = getTitulo()
         localizacaoInicial()
-        localizarAluno()
+        mapa.delegate = localizacao
+        verificaAutorizacaoUsuario()
+        gerenciadorLocalizacao.delegate = self
     }
     
     //MARK: - metodos
@@ -35,31 +39,64 @@ class MapaViewController: UIViewController {
             return "localizar alunos"
     }
     
+    func verificaAutorizacaoUsuario(){
+        if CLLocationManager.locationServicesEnabled(){
+            switch CLLocationManager.authorizationStatus(){
+            case.authorizedWhenInUse:
+                    let botao = Localizacao().configuraBotaoLocalizacaoAtual(mapa: mapa)
+                    mapa.addSubview(botao)
+                    gerenciadorLocalizacao.startUpdatingLocation()
+                break
+            case .notDetermined:
+                gerenciadorLocalizacao.requestWhenInUseAuthorization()
+                
+                break
+                
+            case .denied:
+                
+                break
+                
+            default:
+                
+                break
+            }
+        }
+    }
+    
     func localizacaoInicial(){
         Localizacao().converteEnderecoCoordenadas(endereco: "Caelum - São Paulo") { (localizacaoEncontrada) in
-            let pino = self.configuraPino(titulo: "Caelum", localizacao: localizacaoEncontrada)
+            let pino = Localizacao().configuraPino(titulo: "Caelum", localizacao: localizacaoEncontrada, cor: .black, icone: UIImage(named:"icon_caelum"))
             let regiao = MKCoordinateRegionMakeWithDistance(pino.coordinate, 5000, 5000)
             self.mapa.setRegion(regiao, animated: true)
             self.mapa.addAnnotation(pino)
+            self.localizarAluno()
         }
     }
     
     func localizarAluno(){
         if let aluno = aluno{
             Localizacao().converteEnderecoCoordenadas(endereco: aluno.endereco!) { (localizacaoEncontrada) in
-                let pino = self.configuraPino(titulo: aluno.nome!, localizacao: localizacaoEncontrada)
+                let pino = Localizacao().configuraPino(titulo: aluno.nome!, localizacao: localizacaoEncontrada, cor: nil, icone: nil)
                 self.mapa.addAnnotation(pino)
+                self.mapa.showAnnotations(self.mapa.annotations, animated: true)
             }
         }
     }
     
-    func configuraPino(titulo:String, localizacao:CLPlacemark)-> MKPointAnnotation {
-        let pino = MKPointAnnotation()
-        pino.title = titulo
-        pino.coordinate = localizacao.location!.coordinate
-        
-        
-        return pino
+    // MARK: - CLLocationManagerDelegate
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+        case .authorizedWhenInUse:
+            let botao = Localizacao().configuraBotaoLocalizacaoAtual(mapa: mapa)
+            mapa.addSubview(botao)
+            gerenciadorLocalizacao.startUpdatingLocation()
+        default:
+            break
+        }
     }
-
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print(locations)
+    }
 }

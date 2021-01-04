@@ -126,6 +126,7 @@ class HomeTableViewController: UITableViewController, UISearchBarDelegate, NSFet
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let celula = tableView.dequeueReusableCell(withIdentifier: "celula-aluno", for: indexPath) as! HomeTableViewCell
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector (abrirActionSheet(_:)))
+        celula.tag = indexPath.row
         guard let aluno = gerenciadorResultados?.fetchedObjects![indexPath.row] else {return celula}
         celula.configuraCelula(aluno)
         celula.addGestureRecognizer(longPress)
@@ -188,6 +189,13 @@ class HomeTableViewController: UITableViewController, UISearchBarDelegate, NSFet
             print(error.localizedDescription)
         }
     }
+    
+    @IBAction func buttonLocalizacaoGeral(_ sender: UIBarButtonItem) {
+        let mapa = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "mapa") as! MapaViewController
+        navigationController?.pushViewController(mapa, animated: true)
+        
+    }
+    
     
     //MARK: - SearchBarDelegate
     

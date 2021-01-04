@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class HomeTableViewController: UITableViewController, UISearchBarDelegate {
+class HomeTableViewController: UITableViewController, UISearchBarDelegate, NSFetchedResultsControllerDelegate {
     
     //MARK: - Variáveis
     var contexto:NSManagedObjectContext{
@@ -19,11 +19,13 @@ class HomeTableViewController: UITableViewController, UISearchBarDelegate {
     let searchController = UISearchController(searchResultsController: nil)
     var gerenciadorResultados:NSFetchedResultsController<Aluno>?
     
+    
     // MARK: - View Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configuraSearch()
+        self.recuperaAluno()
     }
     
     // MARK: - Métodos
@@ -40,6 +42,7 @@ class HomeTableViewController: UITableViewController, UISearchBarDelegate {
         pesquisaAluno.sortDescriptors = [ordenaPorNome]
         
         gerenciadorResultados = NSFetchedResultsController(fetchRequest: pesquisaAluno, managedObjectContext: contexto, sectionNameKeyPath: nil, cacheName: nil)
+        gerenciadorResultados?.delegate = self
         
         do{
             try gerenciadorResultados?.performFetch()
@@ -60,13 +63,7 @@ class HomeTableViewController: UITableViewController, UISearchBarDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let celula = tableView.dequeueReusableCell(withIdentifier: "celula-aluno", for: indexPath) as! HomeTableViewCell
         guard let aluno = gerenciadorResultados?.fetchedObjects![indexPath.row] else {return celula}
-        
-        celula.labelNomeDoAluno.text = aluno.nome
-        
-        if let imagemDoAluno = aluno.foto as? UIImage{
-            celula.imageAluno.image = imagemDoAluno
-        }
-        
+        celula.configuraCelula(aluno)
         
         return celula
     }
@@ -83,5 +80,18 @@ class HomeTableViewController: UITableViewController, UISearchBarDelegate {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
+    
+    // MARK: - FetchedResultsControllerDelegate
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+        case .delete:
+            //implementar
+            break
+        default:
+            tableView.reloadData()
+        }
+    }
+    
 
 }

@@ -156,5 +156,15 @@ class HomeTableViewController: UITableViewController, UISearchBarDelegate, NSFet
         }
     }
     
-
+    @IBAction func buttonCalculaMedia(_ sender: UIBarButtonItem) {
+        guard let listaDeAlunos = gerenciadorResultados?.fetchedObjects else{return}
+        CalculaMedia().calculaMediaGeral(alunos: listaDeAlunos, sucesso: { (dicionario) in
+            if let alerta = Notificacoes().exibeNotificacaoMediaAlunos(dicionarioDeMedia: dicionario){
+                self.present(alerta,animated: true, completion: nil)
+            }
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
 }

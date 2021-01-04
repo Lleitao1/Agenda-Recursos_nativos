@@ -276,6 +276,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="4eF-fT-KxE"/>
                     </view>
+                    <connections>
+                        <outlet property="mapa" destination="vMS-4m-LJD" id="cg0-fQ-XLT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XjR-aX-uRq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
